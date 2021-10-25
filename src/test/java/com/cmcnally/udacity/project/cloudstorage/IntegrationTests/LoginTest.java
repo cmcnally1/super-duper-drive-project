@@ -25,10 +25,10 @@ public class LoginTest {
     private LoginPage loginPage;
 
     // Initialise common test variables
-    private String testFirstName = "Joe";
-    private String testLastName = "Soap";
-    private String testUsername = "jsoap";
-    private String testPassword = "JoesPassw0rd";
+    private String testFirstName = "Jane";
+    private String testLastName = "Doe";
+    private String testUsername = "jdoe";
+    private String testPassword = "JanesPassw0rd";
 
     @BeforeAll
     public static void beforeAll() {
