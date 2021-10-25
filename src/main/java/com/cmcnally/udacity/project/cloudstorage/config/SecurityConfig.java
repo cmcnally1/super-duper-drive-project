@@ -48,5 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .defaultSuccessUrl("/home", true);
 
+        // Log user out if logout request is received
+        http.logout()
+                .permitAll();
+
     }
 }
