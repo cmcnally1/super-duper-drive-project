@@ -12,6 +12,7 @@ public class NoteService {
 
     private List<Note> storedNotes;
     private NoteMapper noteMapper;
+    private AuthenticationService authenticationService;
 
     public NoteService(List<Note> storedNotes, NoteMapper noteMapper) {
         this.storedNotes = storedNotes;
@@ -22,7 +23,7 @@ public class NoteService {
         noteMapper.insert(note);
     }
 
-//    public List<Note> getStoredNotes() {
-//        return new ArrayList<>(noteMapper.getNote())
-//    }
+    public List<Note> getStoredNotes() {
+        return new ArrayList<>(noteMapper.getNotes(authenticationService.getUserId()));
+    }
 }
