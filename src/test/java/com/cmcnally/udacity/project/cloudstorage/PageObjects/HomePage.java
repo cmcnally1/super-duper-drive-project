@@ -64,4 +64,12 @@ public class HomePage {
         newNoteSubmitButton.click();
     }
 
+    public String getDisplayedTitle() {
+        return storedNoteTitle.getText();
+    }
+
+    public String getDisplayedDescription() {
+        return storedNoteTitle.getText();
+    }
+
 }
