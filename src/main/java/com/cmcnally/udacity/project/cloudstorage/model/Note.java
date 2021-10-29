@@ -7,13 +7,14 @@ package com.cmcnally.udacity.project.cloudstorage.model;
 public class Note {
 
     // Instance variables for a note
-    private int noteid;
+    private Integer noteid;
     private String notetitle;
     private String notedescription;
-    private int userid;
+    private Integer userid;
 
     // Note constructor
-    public Note(String notetitle, String notedescription, int userid) {
+    public Note(Integer noteid, String notetitle, String notedescription, Integer userid) {
+        this.noteid = noteid;
         this.notetitle = notetitle;
         this.notedescription = notedescription;
         this.userid = userid;
@@ -23,11 +24,11 @@ public class Note {
         Getters and Setters
      */
 
-    public int getNoteid() {
+    public Integer getNoteid() {
         return noteid;
     }
 
-    public void setNoteid(int noteid) {
+    public void setNoteid(Integer noteid) {
         this.noteid = noteid;
     }
 
@@ -47,11 +48,11 @@ public class Note {
         this.notedescription = notedescription;
     }
 
-    public int getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 }

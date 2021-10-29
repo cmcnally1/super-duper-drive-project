@@ -13,7 +13,8 @@ public interface NoteMapper {
 
     // Select all notes for a user
     @Select("SELECT * FROM NOTES WHERE userid = #{userid}")
-    List<Note> getNotes(int userid);
+    List<Note> getNotes(Integer userid);
+
 
     // Insert a new note into the database
     @Insert("INSERT into NOTES (notetitle, notedescription, userid) VALUES(#{notetitle}, #{notedescription}, #{userid})")
