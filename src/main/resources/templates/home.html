@@ -80,8 +80,8 @@
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th th:text="${note.getNoteTitle()}" id="note-entry-title" scope="row">Example Note Title</th>
-                                        <td th:text="${note.getNoteDescription()}" id="note-entry-desc">Example Note Description </td>
+                                        <th th:text="${note.getNotetitle()}" id="note-entry-title" scope="row">Example Note Title</th>
+                                        <td th:text="${note.getNotedescription()}" id="note-entry-desc">Example Note Description </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -97,7 +97,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:object="${newNote}" th:action="@{/home#nav-notes}" action="#" method="POST">
+                                        <form th:object="${newNote}" th:action="@{/home}" action="#" method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
