@@ -14,7 +14,7 @@ public class HomePage {
 
     // Note tab page elements
 
-    @FindBy(id = "nav-notes")
+    @FindBy(id = "nav-notes-tab")
     private WebElement noteTab;
 
     @FindBy(id = "new-note-button")
@@ -35,7 +35,7 @@ public class HomePage {
     @FindBy(id = "note-description")
     private WebElement newNoteDescriptionField;
 
-    @FindBy(id = "noteSubmit")
+    @FindBy(id = "noteSubmitButton")
     private WebElement newNoteSubmitButton;
 
     public HomePage(WebDriver driver) {
@@ -69,7 +69,7 @@ public class HomePage {
     }
 
     public String getDisplayedDescription() {
-        return storedNoteTitle.getText();
+        return storedNoteDescription.getText();
     }
 
 }

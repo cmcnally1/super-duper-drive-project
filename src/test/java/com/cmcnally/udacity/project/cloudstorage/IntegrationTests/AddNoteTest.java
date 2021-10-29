@@ -33,7 +33,7 @@ public class AddNoteTest {
     private String testUsername = "johnD";
     private String testPassword = "JohnsPassw0rd";
     private String testNoteTitle = "Test Note!";
-    private String testNoteDesc = "This is a test note.\n Testing new line.";
+    private String testNoteDesc = "This is a test note.";
 
     @BeforeAll
     public static void beforeAll() {
@@ -47,7 +47,7 @@ public class AddNoteTest {
     }
 
     @Test
-    public void testAddNote() {
+    public void testAddNote() throws InterruptedException {
         /*
             Preconditions:
             The user must be signed up and logged in before they can add notes.
@@ -94,11 +94,26 @@ public class AddNoteTest {
         // Click Note tab
         homePage.clickNoteTab();
 
+        // Wait for element to load correctly
+        Thread.sleep(500);
+
         // Click add new note button
         homePage.clickAddNote();
 
+        // Wait for element to load correctly
+        Thread.sleep(500);
+
         // Enter new note title and description and click submit
         homePage.addNewNote(testNoteTitle, testNoteDesc);
+
+        // Wait for element to load correctly
+        Thread.sleep(500);
+
+        // Click Note tab again
+        homePage.clickNoteTab();
+
+        // Wait for element to load correctly
+        Thread.sleep(500);
 
         // Verify note title and description are displayed correctly
         assertEquals(testNoteTitle, homePage.getDisplayedTitle());
