@@ -6,10 +6,7 @@ import com.cmcnally.udacity.project.cloudstorage.services.AuthenticationService;
 import com.cmcnally.udacity.project.cloudstorage.services.NoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/home")
@@ -30,13 +27,6 @@ public class HomeController {
         return "home";
     }
 
-    // Get method for notes tab which gathers stored notes and displays them
-//    @GetMapping("/home#nav-notes")
-//    public String getHomeNotesView(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
-//        model.addAttribute("storedNotes", this.noteService.getStoredNotes());
-//        return "home#nav-notes";
-//    }
-
     // POST Method to handle a user adding a new note
     @PostMapping
     public String postNewNote(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
@@ -45,5 +35,13 @@ public class HomeController {
         noteForm.setNewNoteTitle("");
         noteForm.setNewNoteDescription("");
         return "home";
+    }
+
+    // Get Method to handle a user deleting a note
+    // Receives the id of the note to be deleted
+    @GetMapping("/deleteNote")
+    public String deleteNote(@RequestParam Integer noteid) {
+        noteService.deleteNote(noteid);
+        return "redirect:/home";
     }
 }

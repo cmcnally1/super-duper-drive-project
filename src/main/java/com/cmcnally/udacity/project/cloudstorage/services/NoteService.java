@@ -28,4 +28,9 @@ public class NoteService {
         return new ArrayList<>(noteMapper.getNotes(authenticationService.getUserId()));
     }
 
+    // Method to delete a note using note id
+    public void deleteNote(Integer noteid) {
+        noteMapper.delete(noteid);
+    }
+
 }
