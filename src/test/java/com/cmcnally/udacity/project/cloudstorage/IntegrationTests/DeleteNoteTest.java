@@ -121,9 +121,8 @@ public class DeleteNoteTest {
         // Wait for deletion to take place
         Thread.sleep(500);
 
-        // Verify that the not title and description are no longer display on page
-        assertNotEquals(testNoteTitle, homePage.getDisplayedTitle());
-        assertNotEquals(testNoteDesc, homePage.getDisplayedDescription());
+        // Verify that no notes are displayed
+        assertEquals(false, homePage.isNoteRowsDisplayed());
     }
 
 

@@ -74,8 +74,8 @@
                                         <th style="width: 60%" scope="col">Description</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr th:each="note : ${storedNotes}" id="note-entry-rows">
+                                <tbody id="note-entry-rows">
+                                    <tr th:each="note : ${storedNotes}">
                                         <td>
                                             <button id="editNoteButton" type="button" class="btn btn-success">Edit</button>
                                             <a id="deleteNoteButton" class="btn btn-danger" th:href="@{/home/deleteNote(noteid=${note.getNoteid()})}">Delete</a>

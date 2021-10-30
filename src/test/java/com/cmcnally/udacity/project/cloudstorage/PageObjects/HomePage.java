@@ -86,4 +86,8 @@ public class HomePage {
         return storedNoteDescription.getText();
     }
 
+    public Boolean isNoteRowsDisplayed(){
+        return storedNoteRows.isDisplayed();
+    }
+
 }
