@@ -38,6 +38,12 @@ public class HomePage {
     @FindBy(id = "noteSubmitButton")
     private WebElement newNoteSubmitButton;
 
+    @FindBy(id = "deleteNoteButton")
+    private WebElement deleteNoteButton;
+
+    @FindBy(id = "editNoteButton")
+    private WebElement editNoteButton;
+
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -56,6 +62,14 @@ public class HomePage {
 
     public void clickAddNote() {
         newNoteButton.click();
+    }
+
+    public void clickDeleteNote() {
+        deleteNoteButton.click();
+    }
+
+    public void clickEditNote() {
+        editNoteButton.click();
     }
 
     public void addNewNote(String title, String description) {

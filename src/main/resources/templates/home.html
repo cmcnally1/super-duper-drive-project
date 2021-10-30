@@ -77,8 +77,8 @@
                                 <tbody>
                                     <tr th:each="note : ${storedNotes}" id="note-entry-rows">
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger">Delete</a>
+                                            <button id="editNoteButton" type="button" class="btn btn-success">Edit</button>
+                                            <a id="deleteNoteButton" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th th:text="${note.getNotetitle()}" id="note-entry-title" scope="row">Example Note Title</th>
                                         <td th:text="${note.getNotedescription()}" id="note-entry-desc">Example Note Description </td>
