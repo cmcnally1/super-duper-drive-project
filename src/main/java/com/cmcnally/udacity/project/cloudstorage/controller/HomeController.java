@@ -27,13 +27,21 @@ public class HomeController {
         return "home";
     }
 
-    // POST Method to handle a user adding a new note
+    // POST Method to handle a user adding a new note or editing an existing one
     @PostMapping
     public String postNewNote(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
-        noteService.addNote(new Note(null, noteForm.getNewNoteTitle(), noteForm.getNewNoteDescription(), authenticationService.getUserId()));
+        // if note id doesn't exist, then this is a new note request
+        // else note already exists, then this is an edit note request
+        if(noteForm.getFormNoteId() == null){
+            // Create new note
+            noteService.addNote(new Note(null, noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), authenticationService.getUserId()));
+        } else {
+            // Update existing note
+            noteService.editNote(noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), noteForm.getFormNoteId());
+        }
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
-        noteForm.setNewNoteTitle("");
-        noteForm.setNewNoteDescription("");
+        noteForm.setFormNoteTitle("");
+        noteForm.setFormNoteDescription("");
         return "home";
     }
 
@@ -44,4 +52,5 @@ public class HomeController {
         noteService.deleteNote(noteid);
         return "redirect:/home";
     }
+
 }
