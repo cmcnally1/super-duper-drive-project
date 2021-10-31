@@ -12,7 +12,9 @@ public class HomePage {
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
 
-    // Note tab page elements
+    /*
+        Note tab page elements
+    */
 
     @FindBy(id = "nav-notes-tab")
     private WebElement noteTab;
@@ -44,6 +46,22 @@ public class HomePage {
     @FindBy(id = "editNoteButton")
     private WebElement editNoteButton;
 
+    /*
+        File page elements
+     */
+
+    @FindBy(id = "nav-files-tab")
+    private WebElement filesTab;
+
+    @FindBy(id = "fileUpload")
+    private WebElement fileUploadButton;
+
+    @FindBy(id = "submitUpload")
+    private WebElement submitUploadButton;
+
+    @FindBy(id = "file-name")
+    private WebElement storedFileName;
+
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -54,7 +72,9 @@ public class HomePage {
         logoutButton.click();
     }
 
-    // Note methods
+    /*
+        Note methods
+     */
 
     public void clickNoteTab() {
         noteTab.click();
@@ -97,4 +117,25 @@ public class HomePage {
         noteDescriptionField.sendKeys(altDescription);
         noteSubmitButton.click();
     }
+
+    /*
+        File methods
+     */
+
+    public void uploadLocalFile(String filePath) throws InterruptedException {
+        // Click upload file and choose path of file to upload
+        fileUploadButton.sendKeys(filePath);
+
+        // Wait for file to upload to show
+        Thread.sleep(500);
+
+        // Click the upload submit button
+        submitUploadButton.click();
+    }
+
+    public String getDisplayedFileName() {
+        return storedFileName.getText();
+    }
+
+
 }
