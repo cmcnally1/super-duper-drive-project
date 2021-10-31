@@ -25,5 +25,5 @@ public interface NoteMapper {
 
     // Update an existing note
     @Update("UPDATE NOTES SET notetitle = #{notetitle}, notedescription = #{notedescription} WHERE noteid = #{noteid}")
-    int update(Integer noteid);
+    int update(String notetitle, String notedescription, Integer noteid);
 }

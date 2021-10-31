@@ -33,4 +33,9 @@ public class NoteService {
         noteMapper.delete(noteid);
     }
 
+    // Method to update a note using the user inputted edits and the note id
+    public void editNote(String notetitle, String notedescription, Integer noteid) {
+        noteMapper.update(notetitle, notedescription, noteid);
+    }
+
 }
