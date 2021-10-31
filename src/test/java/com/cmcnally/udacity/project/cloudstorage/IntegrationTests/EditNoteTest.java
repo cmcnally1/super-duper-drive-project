@@ -48,7 +48,7 @@ public class EditNoteTest {
     }
 
     @Test
-    public void testDeleteNote() throws InterruptedException {
+    public void testEditNote() throws InterruptedException {
         /*
             Preconditions:
             The user must be signed up, logged in and notes added before they can edit notes.

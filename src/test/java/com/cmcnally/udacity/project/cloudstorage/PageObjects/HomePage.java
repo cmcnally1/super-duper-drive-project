@@ -18,7 +18,7 @@ public class HomePage {
     private WebElement noteTab;
 
     @FindBy(id = "new-note-button")
-    private WebElement noteSubmitButton;
+    private WebElement newNoteSubmitButton;
 
     @FindBy(id = "note-entry-rows")
     private WebElement storedNoteRows;
@@ -36,7 +36,7 @@ public class HomePage {
     private WebElement noteDescriptionField;
 
     @FindBy(id = "noteSubmitButton")
-    private WebElement newNoteSubmitButton;
+    private WebElement noteSubmitButton;
 
     @FindBy(id = "deleteNoteButton")
     private WebElement deleteNoteButton;
@@ -61,7 +61,7 @@ public class HomePage {
     }
 
     public void clickAddNote() {
-        noteSubmitButton.click();
+        newNoteSubmitButton.click();
     }
 
     public void clickDeleteNote() {
@@ -75,7 +75,7 @@ public class HomePage {
     public void addNewNote(String title, String description) {
         noteTitleField.sendKeys(title);
         noteDescriptionField.sendKeys(description);
-        newNoteSubmitButton.click();
+        noteSubmitButton.click();
     }
 
     public String getDisplayedTitle() {
@@ -91,7 +91,9 @@ public class HomePage {
     }
 
     public void editNote(String altTitle, String altDescription) {
+        noteTitleField.clear();
         noteTitleField.sendKeys(altTitle);
+        noteDescriptionField.clear();
         noteDescriptionField.sendKeys(altDescription);
         noteSubmitButton.click();
     }
