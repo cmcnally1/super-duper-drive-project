@@ -7,6 +7,7 @@ import com.cmcnally.udacity.project.cloudstorage.services.NoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/home")
@@ -26,6 +27,10 @@ public class HomeController {
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         return "home";
     }
+
+    /*
+        Note methods
+     */
 
     // POST Method to handle a user adding a new note or editing an existing one
     @PostMapping("/postNote")
@@ -53,4 +58,17 @@ public class HomeController {
         return "redirect:/home";
     }
 
+    /*
+        File methods
+     */
+
+    // POST method to handle a user uploading a file
+    @PostMapping("/uploadFile")
+    public String fileUpload(@ModelAttribute("file") MultipartFile file, Model model) {
+        /*
+            TODO: use MultipartFile methods to get the file information and use this info to create a new file to store via fileservice
+         */
+
+        return "redirect:/home";
+    }
 }
