@@ -28,7 +28,7 @@ public class HomeController {
     }
 
     // POST Method to handle a user adding a new note or editing an existing one
-    @PostMapping
+    @PostMapping("/postNote")
     public String postNewNote(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
         // if note id doesn't exist, then this is a new note request
         // else note already exists, then this is an edit note request
@@ -42,7 +42,7 @@ public class HomeController {
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         noteForm.setFormNoteTitle("");
         noteForm.setFormNoteDescription("");
-        return "home";
+        return "redirect:/home";
     }
 
     // Get Method to handle a user deleting a note
