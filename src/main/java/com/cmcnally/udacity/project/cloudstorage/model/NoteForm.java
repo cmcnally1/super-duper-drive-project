@@ -5,22 +5,31 @@ package com.cmcnally.udacity.project.cloudstorage.model;
  */
 public class NoteForm {
 
-    private String newNoteTitle;
-    private String newNoteDescription;
+    private Integer formNoteId;
+    private String formNoteTitle;
+    private String formNoteDescription;
 
-    public String getNewNoteTitle() {
-        return newNoteTitle;
+    public Integer getFormNoteId() {
+        return formNoteId;
     }
 
-    public void setNewNoteTitle(String newNoteTitle) {
-        this.newNoteTitle = newNoteTitle;
+    public void setFormNoteId(Integer formNoteId) {
+        this.formNoteId = formNoteId;
     }
 
-    public String getNewNoteDescription() {
-        return newNoteDescription;
+    public String getFormNoteTitle() {
+        return formNoteTitle;
     }
 
-    public void setNewNoteDescription(String newNoteDescription) {
-        this.newNoteDescription = newNoteDescription;
+    public void setFormNoteTitle(String formNoteTitle) {
+        this.formNoteTitle = formNoteTitle;
+    }
+
+    public String getFormNoteDescription() {
+        return formNoteDescription;
+    }
+
+    public void setFormNoteDescription(String formNoteDescription) {
+        this.formNoteDescription = formNoteDescription;
     }
 }
