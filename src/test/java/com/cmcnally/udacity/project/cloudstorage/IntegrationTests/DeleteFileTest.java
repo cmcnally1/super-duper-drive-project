@@ -90,7 +90,7 @@ public class DeleteFileTest {
         /*
             Test Deleting a file:
             - Click delete file button
-            - VERIFY: File is deleted and note displayed.
+            - VERIFY: File is deleted and nothing is displayed.
          */
 
         // Click the delete file button

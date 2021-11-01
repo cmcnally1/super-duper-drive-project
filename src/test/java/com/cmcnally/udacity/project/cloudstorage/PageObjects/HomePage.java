@@ -148,7 +148,7 @@ public class HomePage {
     }
 
     public Boolean isFileRowsDisplayed() {
-        return storedFileRows.isDisplayed();
+        return storedFileRows.getText() != "";
     }
 
 
