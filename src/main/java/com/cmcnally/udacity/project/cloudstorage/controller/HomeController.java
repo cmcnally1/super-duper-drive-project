@@ -1,13 +1,20 @@
 package com.cmcnally.udacity.project.cloudstorage.controller;
 
+import com.cmcnally.udacity.project.cloudstorage.model.File;
 import com.cmcnally.udacity.project.cloudstorage.model.Note;
 import com.cmcnally.udacity.project.cloudstorage.model.NoteForm;
 import com.cmcnally.udacity.project.cloudstorage.services.AuthenticationService;
+import com.cmcnally.udacity.project.cloudstorage.services.FileService;
 import com.cmcnally.udacity.project.cloudstorage.services.NoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/home")
@@ -15,16 +22,19 @@ public class HomeController {
 
     private NoteService noteService;
     private AuthenticationService authenticationService;
+    private FileService fileService;
 
-    public HomeController(NoteService noteService, AuthenticationService authenticationService) {
+    public HomeController(NoteService noteService, AuthenticationService authenticationService, FileService fileService) {
         this.noteService = noteService;
         this.authenticationService = authenticationService;
+        this.fileService = fileService;
     }
 
     // General GET Method for the home page
     @GetMapping
     public String getHomeView(@ModelAttribute("newNote") NoteForm noteForm, Model model){
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
+        model.addAttribute("storedFiles", this.fileService.getStoredFiles());
         return "home";
     }
 
@@ -64,11 +74,10 @@ public class HomeController {
 
     // POST method to handle a user uploading a file
     @PostMapping("/uploadFile")
-    public String fileUpload(@ModelAttribute("file") MultipartFile file, Model model) {
-        /*
-            TODO: use MultipartFile methods to get the file information and use this info to create a new file to store via fileservice
-         */
-
+    public String fileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+        // Add new file via file service
+        fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
+        model.addAttribute("storedFiles", this.fileService.getStoredFiles());
         return "redirect:/home";
     }
 }
