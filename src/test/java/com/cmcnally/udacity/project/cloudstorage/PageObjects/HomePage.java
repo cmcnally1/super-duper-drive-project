@@ -62,6 +62,12 @@ public class HomePage {
     @FindBy(id = "file-name")
     private WebElement storedFileName;
 
+    @FindBy(id = "fileDeleteButton")
+    private WebElement fileDeleteButton;
+
+    @FindBy(id = "file-entry-rows")
+    private WebElement storedFileRows;
+
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -135,6 +141,14 @@ public class HomePage {
 
     public String getDisplayedFileName() {
         return storedFileName.getText();
+    }
+
+    public void clickDeleteFile() {
+        fileDeleteButton.click();
+    }
+
+    public Boolean isFileRowsDisplayed() {
+        return storedFileRows.isDisplayed();
     }
 
 
