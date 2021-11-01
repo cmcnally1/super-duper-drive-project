@@ -1,10 +1,7 @@
 package com.cmcnally.udacity.project.cloudstorage.mapper;
 
 import com.cmcnally.udacity.project.cloudstorage.model.File;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,5 +16,9 @@ public interface FileMapper {
     @Insert("INSERT into FILES (fileId, filename, contenttype, filesize, userid, filedata) VALUES(#{fileId}, #{filename}, #{contenttype}, #{filesize}, #{userid}, #{filedata})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insert(File file);
+
+    // Delete an existing file
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
+    int delete(Integer fileId);
 
 }
