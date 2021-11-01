@@ -80,4 +80,13 @@ public class HomeController {
         model.addAttribute("storedFiles", this.fileService.getStoredFiles());
         return "redirect:/home";
     }
+
+    // Get method to handle the user deleting a file
+    // Receives the id of the file to be deleted
+    @GetMapping("deleteFile")
+    public String deleteFile(@RequestParam Integer fileId) {
+        // Delete file via file service and redirect to home
+        fileService.deleteFile(fileId);
+        return "redirect:/home";
+    }
 }
