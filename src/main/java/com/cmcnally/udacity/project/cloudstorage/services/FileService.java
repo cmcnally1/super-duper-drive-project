@@ -32,4 +32,9 @@ public class FileService {
         return new ArrayList<>(fileMapper.getFiles(authenticationService.getUserId()));
     }
 
+    // Method to delete a file from the database using the file id
+    public void deleteFile(Integer fileId) {
+        fileMapper.delete(fileId);
+    }
+
 }
