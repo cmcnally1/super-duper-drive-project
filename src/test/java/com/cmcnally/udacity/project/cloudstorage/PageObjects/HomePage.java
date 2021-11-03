@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.File;
+
 public class HomePage {
 
     // Misc page elements
@@ -67,6 +69,9 @@ public class HomePage {
 
     @FindBy(id = "file-entry-rows")
     private WebElement storedFileRows;
+
+    @FindBy(id = "fileViewButton")
+    private WebElement fileDownloadButton;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -147,8 +152,27 @@ public class HomePage {
         fileDeleteButton.click();
     }
 
+    public void clickDownloadFile() {
+        fileDownloadButton.click();
+    }
+
     public Boolean isFileRowsDisplayed() {
         return storedFileRows.getText() != "";
+    }
+
+    // Method to check if file has been downloaded and appears in local downloads directory
+    public Boolean isFileDownloaded(String downloadFolderPath, String fileName) {
+        File directory = new File(downloadFolderPath);
+        File[] dirContents = directory.listFiles();
+
+        for(int i = 0; i < dirContents.length; i++) {
+            if (dirContents[i].getName().equals(fileName)) {
+                // Delete file as no longer needed for test
+                dirContents[i].delete();
+                return true;
+            }
+        }
+        return false;
     }
 
 
