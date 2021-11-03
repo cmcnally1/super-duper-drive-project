@@ -77,6 +77,25 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
+    /*
+        Credential page elements
+     */
+
+    @FindBy(id = "newCredButton")
+    private WebElement newCredentialButton;
+
+    @FindBy(id = "cred-entry-rows")
+    private WebElement storedCredentialRows;
+
+    @FindBy(id = "credURL")
+    private WebElement storedCredentialURL;
+
+    @FindBy(id = "credUsername")
+    private WebElement storedCredentialUsername;
+
+    @FindBy(id = "credPassword")
+    private WebElement storedCredentialPassword;
+
     // Misc page methods
 
     public void clickLogout() {
@@ -173,6 +192,26 @@ public class HomePage {
             }
         }
         return false;
+    }
+
+    /*
+        Credential methods
+     */
+
+    public void clickAddCredential() {
+        newCredentialButton.click();
+    }
+
+    public String getDisplayedURL() {
+        return storedCredentialURL.getText();
+    }
+
+    public String getDisplayedUsername() {
+        return storedCredentialUsername.getText();
+    }
+
+    public String getDisplayedPassword() {
+        return storedCredentialPassword.getText();
     }
 
 
