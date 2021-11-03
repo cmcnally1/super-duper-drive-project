@@ -51,8 +51,8 @@
                                 <tbody id="file-entry-rows">
                                 <tr th:each="file : ${storedFiles}">
                                     <td>
-                                        <a id="fileViewButton" target="_blank" class="btn btn-success">View</a>
-                                        <a  id="fileDeleteButton" class="btn btn-danger" th:href="@{/home/deleteFile(fileId=${file.getFileId()})}">Delete</a>
+                                        <a id="fileViewButton" target="_blank" class="btn btn-success" th:href="@{/home/downloadFile(fileId=${file.getFileId()})}">View</a>
+                                        <a id="fileDeleteButton" class="btn btn-danger" th:href="@{/home/deleteFile(fileId=${file.getFileId()})}">Delete</a>
                                     </td>
                                     <th th:text="${file.getFilename()}" id="file-name" scope="row">ExampleFile.txt</th>
                                 </tr>

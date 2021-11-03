@@ -6,6 +6,10 @@ import com.cmcnally.udacity.project.cloudstorage.model.NoteForm;
 import com.cmcnally.udacity.project.cloudstorage.services.AuthenticationService;
 import com.cmcnally.udacity.project.cloudstorage.services.FileService;
 import com.cmcnally.udacity.project.cloudstorage.services.NoteService;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,5 +92,22 @@ public class HomeController {
         // Delete file via file service and redirect to home
         fileService.deleteFile(fileId);
         return "redirect:/home";
+    }
+
+    // Get method to handle the user downloading a file
+    // Receives the id of the file to be downloaded
+    @GetMapping("downloadFile")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam Integer fileId) {
+        // Get the file from the database
+        File fileToDownload = fileService.getFileById(fileId);
+
+        // Set up HTTP headers for the response to the user
+        HttpHeaders httpHeaders = new HttpHeaders();
+        // Set the content type to be a stream of bytes
+        httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        // Set the Content Disposition to indicate to the browser that this is a download with a specific file name
+        httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.builder("attachment").filename(fileToDownload.getFilename()).build().toString());
+        // Return the response to the user's browser with the file data
+        return ResponseEntity.ok().headers(httpHeaders).body(fileToDownload.getFiledata());
     }
 }
