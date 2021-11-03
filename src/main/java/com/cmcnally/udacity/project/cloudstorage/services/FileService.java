@@ -37,4 +37,9 @@ public class FileService {
         fileMapper.delete(fileId);
     }
 
+    // Method to get a file from the file ID
+    public File getFileById(Integer fileId) {
+        return fileMapper.getFileById(fileId);
+    }
+
 }
