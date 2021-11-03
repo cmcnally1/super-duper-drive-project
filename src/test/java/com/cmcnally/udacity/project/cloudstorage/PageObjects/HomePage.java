@@ -80,6 +80,8 @@ public class HomePage {
     /*
         Credential page elements
      */
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement credentialsTab;
 
     @FindBy(id = "newCredButton")
     private WebElement newCredentialButton;
@@ -95,6 +97,18 @@ public class HomePage {
 
     @FindBy(id = "credPassword")
     private WebElement storedCredentialPassword;
+
+    @FindBy(id = "credential-url")
+    private WebElement credentialURLField;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsernameField;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPasswordField;
+
+    @FindBy(id = "credSubmitButton")
+    private WebElement newCredentialSubmitButton;
 
     // Misc page methods
 
@@ -198,6 +212,10 @@ public class HomePage {
         Credential methods
      */
 
+    public void clickCredentialsTab() {
+        credentialsTab.click();
+    }
+
     public void clickAddCredential() {
         newCredentialButton.click();
     }
@@ -212,6 +230,13 @@ public class HomePage {
 
     public String getDisplayedPassword() {
         return storedCredentialPassword.getText();
+    }
+
+    public void addNewCredential(String url, String username, String password){
+        credentialURLField.sendKeys(url);
+        credentialUsernameField.sendKeys(username);
+        credentialPasswordField.sendKeys(password);
+        newCredentialSubmitButton.click();
     }
 
 
