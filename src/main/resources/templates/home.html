@@ -134,9 +134,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="cred-entry-rows">
-                                <tr th:each="credential : ${storedCredentials}">
+                                <tr th:each="credential,iteration : ${storedCredentials}">
                                     <td>
-                                        <button id="credEditButton" type="button" class="btn btn-success">Edit</button>
+                                        <button id="credEditButton" type="button" class="btn btn-success" th:data1="${credential.getCredentialid()}" th:data2="${credential.getUrl()}" th:data3="${credential.getUsername()}" th:data4="${decryptedPasswords[iteration.index]}" th:onclick="showCredentialModal(this.getAttribute('data1'), this.getAttribute('data2'), this.getAttribute('data3'), this.getAttribute('data4'));">Edit</button>
                                         <a id="credDeleteButton" class="btn btn-danger" th:href="@{/home/deleteCredential(credentialid=${credential.getCredentialid()})}">Delete</a>
                                     </td>
                                     <th th:text="${credential.getUrl()}" id="credURL" scope="row">Example Credential URL</th>

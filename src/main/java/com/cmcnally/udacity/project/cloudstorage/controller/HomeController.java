@@ -41,6 +41,7 @@ public class HomeController {
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         model.addAttribute("storedFiles", this.fileService.getStoredFiles());
         model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
+        model.addAttribute("decryptedPasswords", this.credentialService.getDecryptedPasswords());
         return "home";
     }
 
