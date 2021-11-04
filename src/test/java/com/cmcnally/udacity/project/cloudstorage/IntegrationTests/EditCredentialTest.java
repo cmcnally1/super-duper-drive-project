@@ -130,12 +130,6 @@ public class EditCredentialTest {
         // Wait for delete to take place
         Thread.sleep(500);
 
-        // Verify credentials are displayed correctly
-        assertEquals(testCredURL, homePage.getViewedUrl());
-        assertEquals(testCredUsername, homePage.getViewedUsername());
-        // Verify decrypted password is shown to user
-        assertNotEquals(testCredPassword, homePage.getViewedPassword());
-
         // Enter new credentials in the field
         homePage.editCredential(altUrl, altUsername, altPassword);
 

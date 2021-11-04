@@ -270,8 +270,11 @@ public class HomePage {
     }
 
     public void editCredential(String url, String username, String password) {
+        credentialURLField.clear();
         credentialURLField.sendKeys(url);
+        credentialUsernameField.clear();
         credentialUsernameField.sendKeys(username);
+        credentialPasswordField.clear();
         credentialPasswordField.sendKeys(password);
         newCredentialSubmitButton.click();
     }
