@@ -39,7 +39,7 @@ public class CredentialService {
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), encodedKey);
 
         // Insert credential into database via mapper with key and encrypted password
-        credentialMapper.insert(new Credential(null, credential.getUrl(), credential.getUsername(), encodedKey, encryptedPassword, authenticationService.getUserId()));
+        credentialMapper.insert(new Credential(null, credential.getUrl(), credential.getUsername(), encodedKey, encryptedPassword, credential.getUserid()));
     }
 
     // Method to get the current stored credentials for a user
