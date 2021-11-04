@@ -121,9 +121,19 @@ public class HomeController {
     // Post method to handle the user adding a new credential
     @PostMapping("postCredential")
     public String postNewCredential(@ModelAttribute("newCredential") CredentialForm credentialForm, Model model) {
-        // Add new credential to database and to model to be displayed to user
-        credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
+
+        // if credential id doesn't exist, then this is a new credential request
+        // else credential already exists, then this is an edit credential request
+        if(credentialForm.getFormCredentialId() == null){
+            // Add new credential to database
+            credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
+        } else {
+            // Update existing credential
+            credentialService.editCredential(credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), credentialForm.getFormCredentialPassword(), credentialForm.getFormCredentialId());
+        }
+        // Add credential and decrypted password to model to be displayed to user
         model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
+//        model.addAttribute("decryptedPasswords", this.credentialService.getDecryptedPasswords());
         // Clear the credential form
         credentialForm.setFormCredentialUrl("");
         credentialForm.setFormCredentialUsername("");

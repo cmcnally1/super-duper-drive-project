@@ -66,4 +66,21 @@ public class CredentialService {
     public void deleteCredential(Integer credentialid) {
         credentialMapper.delete(credentialid);
     }
+
+    // Method to update a credential with new values inputted buy the user
+    public void editCredential(String url, String username, String password, Integer credentialid) {
+        /*
+            Encrypt the user's inputted credential password before storing
+         */
+        // Generate an encryption key for the user
+        SecureRandom random = new SecureRandom();
+        byte[] key = new byte[16];
+        random.nextBytes(key);
+        String encodedKey = Base64.getEncoder().encodeToString(key);
+
+        // Encrypt the user's password using the key
+        String encryptedPassword = encryptionService.encryptValue(password, encodedKey);
+
+        credentialMapper.update(url, username, encodedKey, encryptedPassword, credentialid);
+    }
 }
