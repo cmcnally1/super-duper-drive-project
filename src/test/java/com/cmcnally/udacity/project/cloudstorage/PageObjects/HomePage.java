@@ -110,6 +110,12 @@ public class HomePage {
     @FindBy(id = "credSubmitButton")
     private WebElement newCredentialSubmitButton;
 
+    @FindBy(id = "credEditButton")
+    private WebElement credentialEditButton;
+
+    @FindBy(id = "credDeleteButton")
+    private WebElement credentialDeleteButton;
+
     // Misc page methods
 
     public void clickLogout() {
@@ -220,6 +226,14 @@ public class HomePage {
         newCredentialButton.click();
     }
 
+    public void clickDeleteCredential() {
+        credentialDeleteButton.click();
+    }
+
+    public void clickEditCredential() {
+        credentialEditButton.click();
+    }
+
     public String getDisplayedURL() {
         return storedCredentialURL.getText();
     }
@@ -230,6 +244,10 @@ public class HomePage {
 
     public String getDisplayedPassword() {
         return storedCredentialPassword.getText();
+    }
+
+    public Boolean isCredentialDisplayed() {
+        return storedCredentialRows.isDisplayed();
     }
 
     public void addNewCredential(String url, String username, String password){

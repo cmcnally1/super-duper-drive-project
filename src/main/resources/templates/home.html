@@ -136,8 +136,8 @@
                                 <tbody id="cred-entry-rows">
                                 <tr th:each="credential : ${storedCredentials}">
                                     <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <button id="credEditButton" type="button" class="btn btn-success">Edit</button>
+                                        <a id="credDeleteButton" class="btn btn-danger">Delete</a>
                                     </td>
                                     <th th:text="${credential.getUrl()}" id="credURL" scope="row">Example Credential URL</th>
                                     <td th:text="${credential.getUsername()}" id="credUsername">Example Credential Username</td>
