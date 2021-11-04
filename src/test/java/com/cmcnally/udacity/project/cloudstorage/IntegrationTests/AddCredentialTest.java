@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AddCredentialTest {
@@ -118,6 +118,7 @@ public class AddCredentialTest {
         // Verify entered credential is displayed
         assertEquals(testCredURL, homePage.getDisplayedURL());
         assertEquals(testCredUsername, homePage.getDisplayedUsername());
-        assertEquals(testCredPassword, homePage.getDisplayedPassword());
+        // Verify entered password and displayed password are not the same (i.e. password is encrypted)
+        assertNotEquals(testCredPassword, homePage.getDisplayedPassword());
     }
 }
