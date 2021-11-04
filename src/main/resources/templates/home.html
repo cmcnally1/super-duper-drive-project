@@ -137,7 +137,7 @@
                                 <tr th:each="credential : ${storedCredentials}">
                                     <td>
                                         <button id="credEditButton" type="button" class="btn btn-success">Edit</button>
-                                        <a id="credDeleteButton" class="btn btn-danger">Delete</a>
+                                        <a id="credDeleteButton" class="btn btn-danger" th:href="@{/home/deleteCredential(credentialid=${credential.getCredentialid()})}">Delete</a>
                                     </td>
                                     <th th:text="${credential.getUrl()}" id="credURL" scope="row">Example Credential URL</th>
                                     <td th:text="${credential.getUsername()}" id="credUsername">Example Credential Username</td>
