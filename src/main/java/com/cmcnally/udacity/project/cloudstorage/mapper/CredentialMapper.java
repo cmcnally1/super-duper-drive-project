@@ -1,10 +1,7 @@
 package com.cmcnally.udacity.project.cloudstorage.mapper;
 
 import com.cmcnally.udacity.project.cloudstorage.model.Credential;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,4 +16,9 @@ public interface CredentialMapper {
     @Insert("INSERT into CREDENTIALS (url, username, key, password, userid) VALUES(#{url}, #{username}, #{key}, #{password}, #{userid})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialid")
     int insert(Credential credential);
+
+    // Delete a credential given the credential id
+    @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialid}")
+    int delete(Integer credentialid);
+
 }
