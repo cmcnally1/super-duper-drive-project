@@ -250,7 +250,26 @@ public class HomePage {
         return storedCredentialRows.isDisplayed();
     }
 
+    public String getViewedUrl() {
+        return credentialURLField.getText();
+    }
+
+    public String getViewedUsername() {
+        return credentialUsernameField.getText();
+    }
+
+    public String getViewedPassword() {
+        return credentialPasswordField.getText();
+    }
+
     public void addNewCredential(String url, String username, String password){
+        credentialURLField.sendKeys(url);
+        credentialUsernameField.sendKeys(username);
+        credentialPasswordField.sendKeys(password);
+        newCredentialSubmitButton.click();
+    }
+
+    public void editCredential(String url, String username, String password) {
         credentialURLField.sendKeys(url);
         credentialUsernameField.sendKeys(username);
         credentialPasswordField.sendKeys(password);
