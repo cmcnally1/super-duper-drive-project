@@ -129,4 +129,13 @@ public class HomeController {
         credentialForm.setFormCredentialPassword("");
         return "redirect:/home";
     }
+
+    // Get method to handle the user deleting a credential
+    // Receives the id of the file to be deleted
+    @GetMapping("deleteCredential")
+    public String deleteCredential(@RequestParam Integer credentialid) {
+        // Delete the file that matches the id via the credential service
+        credentialService.deleteCredential(credentialid);
+        return "redirect:/home";
+    }
 }

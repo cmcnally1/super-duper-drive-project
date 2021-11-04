@@ -46,4 +46,9 @@ public class CredentialService {
     public List<Credential> getStoredCredentials() {
         return new ArrayList<>(credentialMapper.getCredentials(authenticationService.getUserId()));
     }
+
+    // Method to delete a credential using credential id
+    public void deleteCredential(Integer credentialid) {
+        credentialMapper.delete(credentialid);
+    }
 }
