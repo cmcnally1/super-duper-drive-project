@@ -47,6 +47,21 @@ public class CredentialService {
         return new ArrayList<>(credentialMapper.getCredentials(authenticationService.getUserId()));
     }
 
+    // Method to get decrypted passwords for user
+    // Used to display passwords to user when viewing or editing credentials
+    public List<String> getDecryptedPasswords() {
+        // Get logged in user's credentials
+        List<Credential> userCredentials = credentialMapper.getCredentials(authenticationService.getUserId());
+        // Initialise a list of Strings to hold the user's decrypted passwords
+        List<String> decryptedPasswords = new ArrayList<>();
+        // Loop over each user's credential, decrypting each password
+        for(int i = 0; i < userCredentials.size(); i++) {
+            decryptedPasswords.add(encryptionService.decryptValue(userCredentials.get(i).getPassword(), userCredentials.get(i).getKey()));
+        }
+        // Return the decrypted passwords
+        return decryptedPasswords;
+    }
+
     // Method to delete a credential using credential id
     public void deleteCredential(Integer credentialid) {
         credentialMapper.delete(credentialid);
