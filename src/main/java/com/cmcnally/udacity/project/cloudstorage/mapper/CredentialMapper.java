@@ -22,7 +22,7 @@ public interface CredentialMapper {
     int delete(Integer credentialid);
 
     // Update existing credential
-    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, password = #{password} WHERE credentialid = #{credentialid}")
-    int update(String url, String username, String password, Integer credentialid);
+    @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{username}, key = #{key}, password = #{password} WHERE credentialid = #{credentialid}")
+    int update(String url, String username, String key, String password, Integer credentialid);
 
 }
