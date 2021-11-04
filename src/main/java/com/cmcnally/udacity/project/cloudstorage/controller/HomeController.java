@@ -1,9 +1,8 @@
 package com.cmcnally.udacity.project.cloudstorage.controller;
 
-import com.cmcnally.udacity.project.cloudstorage.model.File;
-import com.cmcnally.udacity.project.cloudstorage.model.Note;
-import com.cmcnally.udacity.project.cloudstorage.model.NoteForm;
+import com.cmcnally.udacity.project.cloudstorage.model.*;
 import com.cmcnally.udacity.project.cloudstorage.services.AuthenticationService;
+import com.cmcnally.udacity.project.cloudstorage.services.CredentialService;
 import com.cmcnally.udacity.project.cloudstorage.services.FileService;
 import com.cmcnally.udacity.project.cloudstorage.services.NoteService;
 import org.springframework.http.ContentDisposition;
@@ -27,18 +26,21 @@ public class HomeController {
     private NoteService noteService;
     private AuthenticationService authenticationService;
     private FileService fileService;
+    private CredentialService credentialService;
 
-    public HomeController(NoteService noteService, AuthenticationService authenticationService, FileService fileService) {
+    public HomeController(NoteService noteService, AuthenticationService authenticationService, FileService fileService, CredentialService credentialService) {
         this.noteService = noteService;
         this.authenticationService = authenticationService;
         this.fileService = fileService;
+        this.credentialService = credentialService;
     }
 
     // General GET Method for the home page
     @GetMapping
-    public String getHomeView(@ModelAttribute("newNote") NoteForm noteForm, Model model){
+    public String getHomeView(@ModelAttribute("newNote") NoteForm noteForm, @ModelAttribute("newCredential") CredentialForm credentialForm, Model model){
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         model.addAttribute("storedFiles", this.fileService.getStoredFiles());
+        model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
         return "home";
     }
 
@@ -109,5 +111,22 @@ public class HomeController {
         httpHeaders.set(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.builder("attachment").filename(fileToDownload.getFilename()).build().toString());
         // Return the response to the user's browser with the file data
         return ResponseEntity.ok().headers(httpHeaders).body(fileToDownload.getFiledata());
+    }
+
+    /*
+        Credential Methods
+     */
+
+    // Post method to handle the user adding a new credential
+    @PostMapping("postCredential")
+    public String postNewCredential(@ModelAttribute("newCredential") CredentialForm credentialForm, Model model) {
+        // Add new credential to database and to model to be displayed to user
+        credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
+        model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
+        // Clear the credential form
+        credentialForm.setFormCredentialUrl("");
+        credentialForm.setFormCredentialUsername("");
+        credentialForm.setFormCredentialPassword("");
+        return "redirect:/home";
     }
 }
