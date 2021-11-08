@@ -64,7 +64,17 @@ public class CredentialService {
 
     // Method to delete a credential using credential id
     public void deleteCredential(Integer credentialid) {
-        credentialMapper.delete(credentialid);
+        // Get logged in user's credentials
+        List<Credential> authUserCreds = this.getStoredCredentials();
+
+        // Search the user's credentials to ensure the requested credential to be deleted
+        // belongs to the logged in user. If not, do nothing.
+        for(int i = 0; i < authUserCreds.size(); i++) {
+            if(authUserCreds.get(i).getCredentialid() == credentialid) {
+                credentialMapper.delete(credentialid);
+                break;
+            }
+        }
     }
 
     // Method to update a credential with new values inputted buy the user

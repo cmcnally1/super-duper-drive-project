@@ -34,12 +34,31 @@ public class FileService {
 
     // Method to delete a file from the database using the file id
     public void deleteFile(Integer fileId) {
-        fileMapper.delete(fileId);
+
+        // Get logged in user's files
+        List<File> authUserFiles = this.getStoredFiles();
+
+        // Search the user's Files to ensure the requested file to be deleted
+        // belongs to the logged in user. If not, do nothing.
+        for(int i = 0; i < authUserFiles.size(); i++) {
+            if(authUserFiles.get(i).getFileId() == fileId) {
+                fileMapper.delete(fileId);
+                break;
+            }
+        }
     }
 
     // Method to get a file from the file ID
     public File getFileById(Integer fileId) {
-        return fileMapper.getFileById(fileId);
+        // Find the file using the id
+        File file = fileMapper.getFileById(fileId);
+
+        // If the file belongs to current logged in user, return the file
+        if (file.getUserid() == authenticationService.getUserId()) {
+            return fileMapper.getFileById(fileId);
+        }
+        // Otherwise, return null
+        return null;
     }
 
 }

@@ -30,7 +30,17 @@ public class NoteService {
 
     // Method to delete a note using note id
     public void deleteNote(Integer noteid) {
-        noteMapper.delete(noteid);
+        // Get logged in user's notes
+        List<Note> authUserNotes = this.getStoredNotes();
+
+        // Search the user's notes to ensure the requested note to be deleted
+        // belongs to the logged in user. If not, do nothing.
+        for(int i = 0; i < authUserNotes.size(); i++) {
+            if(authUserNotes.get(i).getNoteid() == noteid) {
+                noteMapper.delete(noteid);
+                break;
+            }
+        }
     }
 
     // Method to update a note using the user inputted edits and the note id
