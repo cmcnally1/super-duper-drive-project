@@ -157,7 +157,7 @@ public class HomePage {
     }
 
     public Boolean isNoteRowsDisplayed(){
-        return storedNoteRows.isDisplayed();
+        return storedNoteRows.getText() != "";
     }
 
     public void editNote(String altTitle, String altDescription) {
@@ -247,7 +247,7 @@ public class HomePage {
     }
 
     public Boolean isCredentialDisplayed() {
-        return storedCredentialRows.isDisplayed();
+        return storedCredentialRows.getText() != "";
     }
 
     public String getViewedUrl() {
