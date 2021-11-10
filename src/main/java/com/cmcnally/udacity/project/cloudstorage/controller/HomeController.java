@@ -23,6 +23,8 @@ public class HomeController {
     private FileService fileService;
     private CredentialService credentialService;
 
+    private String messageToShow = "";
+
     public HomeController(NoteService noteService, AuthenticationService authenticationService, FileService fileService, CredentialService credentialService) {
         this.noteService = noteService;
         this.authenticationService = authenticationService;
@@ -33,6 +35,44 @@ public class HomeController {
     // General GET Method for the home page
     @GetMapping
     public String getHomeView(@ModelAttribute("newNote") NoteForm noteForm, @ModelAttribute("newCredential") CredentialForm credentialForm, Model model){
+
+        // Check if there is an alert box to show to the user
+        switch (messageToShow) {
+            case "NoteAdd":
+                model.addAttribute("noteAddSuccess", true);
+                messageToShow = "";
+                break;
+            case "NoteUpdate":
+                model.addAttribute("noteUpdateSuccess", true);
+                messageToShow = "";
+                break;
+            case "NoteDelete":
+                model.addAttribute("noteDeleteSuccess", true);
+                messageToShow = "";
+                break;
+            case "CredAdd":
+                model.addAttribute("credAddSuccess", true);
+                messageToShow = "";
+                break;
+            case "CredUpdate":
+                model.addAttribute("credUpdateSuccess", true);
+                messageToShow = "";
+                break;
+            case "CredDelete":
+                model.addAttribute("credDeleteSuccess", true);
+                messageToShow = "";
+                break;
+            case "FileAdd":
+                model.addAttribute("fileAddSuccess", true);
+                messageToShow = "";
+                break;
+            case "FileDelete":
+                model.addAttribute("fileDeleteSuccess", true);
+                messageToShow = "";
+                break;
+        }
+
+        // Add data to display to the user in the view
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         model.addAttribute("storedFiles", this.fileService.getStoredFiles());
         model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
@@ -52,9 +92,13 @@ public class HomeController {
         if(noteForm.getFormNoteId() == null){
             // Create new note
             noteService.addNote(new Note(null, noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), authenticationService.getUserId()));
+            // Set message to show add note success
+            messageToShow = "NoteAdd";
         } else {
             // Update existing note
             noteService.editNote(noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), noteForm.getFormNoteId());
+            // Set message to show update note success
+            messageToShow = "NoteUpdate";
         }
         model.addAttribute("storedNotes", this.noteService.getStoredNotes());
         noteForm.setFormNoteTitle("");
@@ -67,6 +111,8 @@ public class HomeController {
     @GetMapping("/deleteNote")
     public String deleteNote(@RequestParam Integer noteid) {
         noteService.deleteNote(noteid);
+        // Set message to show delete note success
+        messageToShow = "NoteDelete";
         return "redirect:/home";
     }
 
@@ -80,6 +126,8 @@ public class HomeController {
         // Add new file via file service
         fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
         model.addAttribute("storedFiles", this.fileService.getStoredFiles());
+        // Set message to show upload file success
+        messageToShow = "FileAdd";
         return "redirect:/home";
     }
 
@@ -89,6 +137,8 @@ public class HomeController {
     public String deleteFile(@RequestParam Integer fileId) {
         // Delete file via file service and redirect to home
         fileService.deleteFile(fileId);
+        // Set message to show delete file success
+        messageToShow = "FileDelete";
         return "redirect:/home";
     }
 
@@ -128,9 +178,13 @@ public class HomeController {
         if(credentialForm.getFormCredentialId() == null){
             // Add new credential to database
             credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
+            // Set message to show add credential success
+            messageToShow = "CredAdd";
         } else {
             // Update existing credential
             credentialService.editCredential(credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), credentialForm.getFormCredentialPassword(), credentialForm.getFormCredentialId());
+            // Set message to show update credential success
+            messageToShow = "CredUpdate";
         }
         // Add credential and decrypted password to model to be displayed to user
         model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
@@ -148,6 +202,8 @@ public class HomeController {
     public String deleteCredential(@RequestParam Integer credentialid) {
         // Delete the file that matches the id via the credential service
         credentialService.deleteCredential(credentialid);
+        // Set message to show delete credential success
+        messageToShow = "CredDelete";
         return "redirect:/home";
     }
 }

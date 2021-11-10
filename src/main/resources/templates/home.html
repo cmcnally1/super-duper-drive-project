@@ -190,6 +190,39 @@
         <script th:src="@{/js/popper.min.js}"></script>
         <script th:src="@{/js/bootstrap.min.js}"></script>
 
+        <!-- Alert boxes -->
+        <script th:if="${noteAddSuccess}">
+            alert('Note added successfully');
+        </script>
+
+        <script th:if="${noteUpdateSuccess}">
+            alert('Note updated successfully');
+        </script>
+
+        <script th:if="${noteDeleteSuccess}">
+            alert('Note delete successfully');
+        </script>
+
+        <script th:if="${credAddSuccess}">
+            alert('Credential added successfully');
+        </script>
+
+        <script th:if="${credUpdateSuccess}">
+            alert('Credential updated successfully');
+        </script>
+
+        <script th:if="${credDeleteSuccess}">
+            alert('Credential deleted successfully');
+        </script>
+
+        <script th:if="${fileAddSuccess}">
+            alert('File uploaded successfully');
+        </script>
+
+        <script th:if="${fileDeleteSuccess}">
+            alert('File deleted successfully');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal
