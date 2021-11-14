@@ -251,6 +251,10 @@
             alert('An error has occurred processing your file action. Please try again.');
         </script>
 
+        <script th:if="${fileTooLarge}">
+            alert('The file you are uploading exceeds the maximum size of 30MB. Please try again with a smaller file.');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal

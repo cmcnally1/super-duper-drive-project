@@ -98,13 +98,22 @@ public class HomeController {
                 model.addAttribute("wrongUserFile", true);
                 messageToShow = "";
                 break;
+            case "FileLarge":
+                model.addAttribute("fileTooLarge", true);
+                messageToShow = "";
+                break;
         }
 
-        // Add data to display to the user in the view
-        model.addAttribute("storedNotes", this.noteService.getStoredNotes());
-        model.addAttribute("storedFiles", this.fileService.getStoredFiles());
-        model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
-        model.addAttribute("decryptedPasswords", this.credentialService.getDecryptedPasswords());
+        // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
+        try {
+            // Add data to display to the user in the view
+            model.addAttribute("storedNotes", this.noteService.getStoredNotes());
+            model.addAttribute("storedFiles", this.fileService.getStoredFiles());
+            model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
+            model.addAttribute("decryptedPasswords", this.credentialService.getDecryptedPasswords());
+        } catch (NullPointerException e) {
+            return "login";
+        }
         return "home";
     }
 
@@ -180,7 +189,12 @@ public class HomeController {
         if(file.isEmpty()){
             // if file is empty, display an alert to user
             messageToShow = "FileEmpty";
+        } else if (file.getSize() > 31457280) {
+            // If file is greater than 30 MB, display file too large message
+            messageToShow = "FileLarge";
         } else {
+
+            file.getSize();
             // if file is not empty, proceed to store file in database.
             // Add new file via file service
             rowsUpdate = fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
