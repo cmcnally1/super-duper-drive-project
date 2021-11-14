@@ -203,6 +203,14 @@
             alert('Note deleted successfully');
         </script>
 
+        <script th:if="${noteError}">
+            alert('An error has occurred processing your note action. Please try again.');
+        </script>
+
+        <script th:if="${wrongUserNote}">
+            alert('Access Denied! You do not have access to delete this note.');
+        </script>
+
         <script th:if="${credAddSuccess}">
             alert('Credential added successfully');
         </script>
@@ -226,6 +234,8 @@
         <script th:if="${fileEmpty}">
             alert('You have not chosen a file to upload. Please choose a file and try again.');
         </script>
+
+
 
         <!--For opening the note modal-->
         <script type="text/javascript">

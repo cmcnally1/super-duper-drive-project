@@ -20,8 +20,8 @@ public class NoteService {
         this.authenticationService = authenticationService;
     }
 
-    public void addNote(Note note) {
-        noteMapper.insert(note);
+    public int addNote(Note note) {
+        return noteMapper.insert(note);
     }
 
     public List<Note> getStoredNotes() {
@@ -29,23 +29,25 @@ public class NoteService {
     }
 
     // Method to delete a note using note id
-    public void deleteNote(Integer noteid) {
+    public int deleteNote(Integer noteid) {
         // Get logged in user's notes
         List<Note> authUserNotes = this.getStoredNotes();
 
         // Search the user's notes to ensure the requested note to be deleted
-        // belongs to the logged in user. If not, do nothing.
+        // belongs to the logged in user. If not, do nothing and return -1 to inform user.
         for(int i = 0; i < authUserNotes.size(); i++) {
             if(authUserNotes.get(i).getNoteid() == noteid) {
-                noteMapper.delete(noteid);
-                break;
+                return noteMapper.delete(noteid);
             }
         }
+
+        // User in home controller to return specific error message to user
+        return -1;
     }
 
     // Method to update a note using the user inputted edits and the note id
-    public void editNote(String notetitle, String notedescription, Integer noteid) {
-        noteMapper.update(notetitle, notedescription, noteid);
+    public int editNote(String notetitle, String notedescription, Integer noteid) {
+        return noteMapper.update(notetitle, notedescription, noteid);
     }
 
 }

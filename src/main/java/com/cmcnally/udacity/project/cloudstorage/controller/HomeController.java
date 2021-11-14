@@ -74,6 +74,14 @@ public class HomeController {
                 model.addAttribute("fileEmpty", true);
                 messageToShow = "";
                 break;
+            case "NoteError":
+                model.addAttribute("noteError", true);
+                messageToShow = "";
+                break;
+            case "WrongUserNote":
+                model.addAttribute("wrongUserNote", true);
+                messageToShow = "";
+                break;
         }
 
         // Add data to display to the user in the view
@@ -91,20 +99,32 @@ public class HomeController {
     // POST Method to handle a user adding a new note or editing an existing one
     @PostMapping("/postNote")
     public String postNewNote(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
+        // Variable to hold the number of rows update/created in database
+        int rowsUpdate;
         // if note id doesn't exist, then this is a new note request
         // else note already exists, then this is an edit note request
         if(noteForm.getFormNoteId() == null){
-            // Create new note
-            noteService.addNote(new Note(null, noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), authenticationService.getUserId()));
-            // Set message to show add note success
-            messageToShow = "NoteAdd";
+            // Create new note and return number of rows update in database
+            rowsUpdate = noteService.addNote(new Note(null, noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), authenticationService.getUserId()));
+            // If rows have been update/created, then show updated notes to user
+            if (rowsUpdate > 0){
+                // Set message to show add note success
+                messageToShow = "NoteAdd";
+            } else {
+                messageToShow = "NoteError";
+            }
         } else {
-            // Update existing note
-            noteService.editNote(noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), noteForm.getFormNoteId());
-            // Set message to show update note success
-            messageToShow = "NoteUpdate";
+            // Update existing note and return number of rows update in database
+            rowsUpdate = noteService.editNote(noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), noteForm.getFormNoteId());
+            // If rows have been update/created, then show updated notes to user
+            if (rowsUpdate > 0){
+                // Set message to show update note success
+                messageToShow = "NoteUpdate";
+            } else {
+                messageToShow = "NoteError";
+            }
         }
-        model.addAttribute("storedNotes", this.noteService.getStoredNotes());
+        // Reset Note form
         noteForm.setFormNoteTitle("");
         noteForm.setFormNoteDescription("");
         return "redirect:/home";
@@ -114,9 +134,20 @@ public class HomeController {
     // Receives the id of the note to be deleted
     @GetMapping("/deleteNote")
     public String deleteNote(@RequestParam Integer noteid) {
-        noteService.deleteNote(noteid);
-        // Set message to show delete note success
-        messageToShow = "NoteDelete";
+        // Delete the user note and return rows updated.
+        int rowUpdate = noteService.deleteNote(noteid);
+        // Set message to show to user
+        if (rowUpdate > 0) {
+            // Delete note success
+            messageToShow = "NoteDelete";
+        } else if (rowUpdate < 0) {
+            // Trying to delete other user's note
+            messageToShow = "WrongUserNote";
+        } else {
+            // Note error
+            messageToShow = "NoteError";
+        }
+
         return "redirect:/home";
     }
 
