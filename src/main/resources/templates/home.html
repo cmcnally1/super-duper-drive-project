@@ -223,6 +223,14 @@
             alert('Credential deleted successfully');
         </script>
 
+        <script th:if="${credError}">
+            alert('An error has occurred processing your credential action. Please try again.');
+        </script>
+
+        <script th:if="${wrongUserCred}">
+            alert('Access Denied! You do not have access to delete this credential.');
+        </script>
+
         <script th:if="${fileAddSuccess}">
             alert('File uploaded successfully');
         </script>

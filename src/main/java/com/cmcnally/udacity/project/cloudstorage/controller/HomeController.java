@@ -82,6 +82,14 @@ public class HomeController {
                 model.addAttribute("wrongUserNote", true);
                 messageToShow = "";
                 break;
+            case "CredError":
+                model.addAttribute("credError", true);
+                messageToShow = "";
+                break;
+            case "WrongUserCred":
+                model.addAttribute("wrongUserCred", true);
+                messageToShow = "";
+                break;
         }
 
         // Add data to display to the user in the view
@@ -100,7 +108,7 @@ public class HomeController {
     @PostMapping("/postNote")
     public String postNewNote(@ModelAttribute("newNote") NoteForm noteForm, Model model) {
         // Variable to hold the number of rows update/created in database
-        int rowsUpdate;
+        int rowsUpdate = 0;
         // if note id doesn't exist, then this is a new note request
         // else note already exists, then this is an edit note request
         if(noteForm.getFormNoteId() == null){
@@ -215,22 +223,32 @@ public class HomeController {
     @PostMapping("postCredential")
     public String postNewCredential(@ModelAttribute("newCredential") CredentialForm credentialForm, Model model) {
 
+        // Variable to hold number of database rows affected by action
+        int rowsUpdate = 0;
+
         // if credential id doesn't exist, then this is a new credential request
         // else credential already exists, then this is an edit credential request
         if(credentialForm.getFormCredentialId() == null){
             // Add new credential to database
-            credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
-            // Set message to show add credential success
-            messageToShow = "CredAdd";
+            rowsUpdate = credentialService.addCredential(new Credential(null, credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), null, credentialForm.getFormCredentialPassword(), authenticationService.getUserId()));
+            // If rows have been update/created, otherwise show error
+            if (rowsUpdate > 0){
+                // Set message to show add credential success
+                messageToShow = "CredAdd";
+            } else {
+                messageToShow = "CredError";
+            }
         } else {
             // Update existing credential
-            credentialService.editCredential(credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), credentialForm.getFormCredentialPassword(), credentialForm.getFormCredentialId());
-            // Set message to show update credential success
-            messageToShow = "CredUpdate";
+            rowsUpdate = credentialService.editCredential(credentialForm.getFormCredentialUrl(), credentialForm.getFormCredentialUsername(), credentialForm.getFormCredentialPassword(), credentialForm.getFormCredentialId());
+            // If rows have been update/created, otherwise show error
+            if (rowsUpdate > 0){
+                // Set message to show update credential success
+                messageToShow = "CredUpdate";
+            } else {
+                messageToShow = "CredError";
+            }
         }
-        // Add credential and decrypted password to model to be displayed to user
-        model.addAttribute("storedCredentials", this.credentialService.getStoredCredentials());
-//        model.addAttribute("decryptedPasswords", this.credentialService.getDecryptedPasswords());
         // Clear the credential form
         credentialForm.setFormCredentialUrl("");
         credentialForm.setFormCredentialUsername("");
@@ -243,9 +261,20 @@ public class HomeController {
     @GetMapping("deleteCredential")
     public String deleteCredential(@RequestParam Integer credentialid) {
         // Delete the file that matches the id via the credential service
-        credentialService.deleteCredential(credentialid);
-        // Set message to show delete credential success
-        messageToShow = "CredDelete";
+        int rowUpdate = credentialService.deleteCredential(credentialid);
+
+        // Set message to show to user
+        if (rowUpdate > 0) {
+            // Set message to show delete credential success
+            messageToShow = "CredDelete";
+        } else if (rowUpdate < 0) {
+            // Trying to delete other user's credential
+            messageToShow = "WrongUserCred";
+        } else {
+            // Credential error
+            messageToShow = "CredError";
+        }
+
         return "redirect:/home";
     }
 }

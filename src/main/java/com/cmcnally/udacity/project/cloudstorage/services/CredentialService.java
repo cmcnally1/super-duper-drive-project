@@ -24,7 +24,7 @@ public class CredentialService {
     }
 
     // Method to add a new credential to the database
-    public void addCredential(Credential credential) {
+    public int addCredential(Credential credential) {
 
         /*
             Encrypt the user's inputted credential password before storing
@@ -39,7 +39,7 @@ public class CredentialService {
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), encodedKey);
 
         // Insert credential into database via mapper with key and encrypted password
-        credentialMapper.insert(new Credential(null, credential.getUrl(), credential.getUsername(), encodedKey, encryptedPassword, credential.getUserid()));
+        return credentialMapper.insert(new Credential(null, credential.getUrl(), credential.getUsername(), encodedKey, encryptedPassword, credential.getUserid()));
     }
 
     // Method to get the current stored credentials for a user
@@ -63,22 +63,23 @@ public class CredentialService {
     }
 
     // Method to delete a credential using credential id
-    public void deleteCredential(Integer credentialid) {
+    public int deleteCredential(Integer credentialid) {
         // Get logged in user's credentials
         List<Credential> authUserCreds = this.getStoredCredentials();
 
         // Search the user's credentials to ensure the requested credential to be deleted
-        // belongs to the logged in user. If not, do nothing.
+        // belongs to the logged in user. If not, do nothing and return -1 to inform user
         for(int i = 0; i < authUserCreds.size(); i++) {
             if(authUserCreds.get(i).getCredentialid() == credentialid) {
-                credentialMapper.delete(credentialid);
-                break;
+                return credentialMapper.delete(credentialid);
             }
         }
+        // Used in home controller to display to user they cannot delete this
+        return -1;
     }
 
     // Method to update a credential with new values inputted buy the user
-    public void editCredential(String url, String username, String password, Integer credentialid) {
+    public int editCredential(String url, String username, String password, Integer credentialid) {
         /*
             Encrypt the user's inputted credential password before storing
          */
@@ -91,6 +92,6 @@ public class CredentialService {
         // Encrypt the user's password using the key
         String encryptedPassword = encryptionService.encryptValue(password, encodedKey);
 
-        credentialMapper.update(url, username, encodedKey, encryptedPassword, credentialid);
+        return credentialMapper.update(url, username, encodedKey, encryptedPassword, credentialid);
     }
 }
