@@ -100,6 +100,12 @@ public class DeleteCredentialTest {
         // Wait for element to load correctly
         Thread.sleep(500);
 
+        // Verify success alert box is shown
+        assertEquals("Credential added successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
+
         // Click Credentials tab again
         homePage.clickCredentialsTab();
 
@@ -123,6 +129,12 @@ public class DeleteCredentialTest {
 
         // Wait for delete to take place
         Thread.sleep(500);
+
+        // Verify success alert box is shown
+        assertEquals("Credential deleted successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
 
         // Verify that no credentials are displayed
         assertEquals(false, homePage.isCredentialDisplayed());

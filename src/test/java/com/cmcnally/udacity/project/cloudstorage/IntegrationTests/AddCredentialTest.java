@@ -109,6 +109,12 @@ public class AddCredentialTest {
         // Wait for element to load correctly
         Thread.sleep(500);
 
+        // Verify success alert box is shown
+        assertEquals("Credential added successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
+
         // Click Credentials tab again
         homePage.clickCredentialsTab();
 

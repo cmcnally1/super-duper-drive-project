@@ -14,6 +14,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/*
+    NOTE: In test variables section, please provide the path to a file to upload
+ */
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DeleteFileTest {
 
@@ -84,6 +88,12 @@ public class DeleteFileTest {
         // Click the upload button and choose local file to upload
         homePage.uploadLocalFile(localFilePath);
 
+        // Verify success alert box is shown
+        assertEquals("File uploaded successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
+
         // Verify file is uploaded
         assertEquals(localFileName, homePage.getDisplayedFileName());
 
@@ -98,6 +108,12 @@ public class DeleteFileTest {
 
         // Wait for deletion to take place
         Thread.sleep(500);
+
+        // Verify success alert box is shown
+        assertEquals("File deleted successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
 
         // Verify that no files are displayed
         assertEquals(false, homePage.isFileRowsDisplayed());

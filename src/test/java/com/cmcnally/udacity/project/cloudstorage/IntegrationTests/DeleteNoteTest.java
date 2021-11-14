@@ -99,6 +99,12 @@ public class DeleteNoteTest {
         // Wait for element to load correctly
         Thread.sleep(500);
 
+        // Verify success alert box is shown
+        assertEquals("Note added successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
+
         // Click Note tab again
         homePage.clickNoteTab();
 
@@ -120,6 +126,12 @@ public class DeleteNoteTest {
 
         // Wait for deletion to take place
         Thread.sleep(500);
+
+        // Verify success alert box is shown
+        assertEquals("Note deleted successfully", driver.switchTo().alert().getText());
+
+        // Click ok on alert box
+        driver.switchTo().alert().accept();
 
         // Verify that no notes are displayed
         assertEquals(false, homePage.isNoteRowsDisplayed());
