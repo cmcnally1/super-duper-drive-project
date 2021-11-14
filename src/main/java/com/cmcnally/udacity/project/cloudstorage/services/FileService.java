@@ -23,8 +23,8 @@ public class FileService {
     }
 
     // Method to add file to database via mapper
-    public void addFile(File file){
-        fileMapper.insert(file);
+    public int addFile(File file){
+        return fileMapper.insert(file);
     }
 
     // Method to get the currently logged in user's files from database
@@ -33,19 +33,21 @@ public class FileService {
     }
 
     // Method to delete a file from the database using the file id
-    public void deleteFile(Integer fileId) {
+    public int deleteFile(Integer fileId) {
 
         // Get logged in user's files
         List<File> authUserFiles = this.getStoredFiles();
 
         // Search the user's Files to ensure the requested file to be deleted
-        // belongs to the logged in user. If not, do nothing.
+        // belongs to the logged in user. If not, do nothing and return -1 to inform user
         for(int i = 0; i < authUserFiles.size(); i++) {
             if(authUserFiles.get(i).getFileId() == fileId) {
-                fileMapper.delete(fileId);
-                break;
+                return fileMapper.delete(fileId);
             }
         }
+
+        // Used in home controller to display alert to user
+        return -1;
     }
 
     // Method to get a file from the file ID

@@ -243,7 +243,13 @@
             alert('You have not chosen a file to upload. Please choose a file and try again.');
         </script>
 
+        <script th:if="${wrongUserFile}">
+            alert('Access Denied! You do not have access to delete this file.');
+        </script>
 
+        <script th:if="${fileError}">
+            alert('An error has occurred processing your file action. Please try again.');
+        </script>
 
         <!--For opening the note modal-->
         <script type="text/javascript">

@@ -90,6 +90,14 @@ public class HomeController {
                 model.addAttribute("wrongUserCred", true);
                 messageToShow = "";
                 break;
+            case "FileError":
+                model.addAttribute("fileError", true);
+                messageToShow = "";
+                break;
+            case "WrongUserFile":
+                model.addAttribute("wrongUserFile", true);
+                messageToShow = "";
+                break;
         }
 
         // Add data to display to the user in the view
@@ -166,6 +174,8 @@ public class HomeController {
     // POST method to handle a user uploading a file
     @PostMapping("/uploadFile")
     public String fileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+        // Variable to hold number of database rows added
+        int rowsUpdate = 0;
         // Check if file uploaded is empty
         if(file.isEmpty()){
             // if file is empty, display an alert to user
@@ -173,10 +183,15 @@ public class HomeController {
         } else {
             // if file is not empty, proceed to store file in database.
             // Add new file via file service
-            fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
-            model.addAttribute("storedFiles", this.fileService.getStoredFiles());
-            // Set message to show upload file success
-            messageToShow = "FileAdd";
+            rowsUpdate = fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
+            // If rows have been update/created, then show updated notes to user
+            if (rowsUpdate > 0){
+                // Set message to show upload file success
+                messageToShow = "FileAdd";
+            } else {
+                // Show file error message to user
+                messageToShow = "FileError";
+            }
         }
         return "redirect:/home";
     }
@@ -186,9 +201,18 @@ public class HomeController {
     @GetMapping("deleteFile")
     public String deleteFile(@RequestParam Integer fileId) {
         // Delete file via file service and redirect to home
-        fileService.deleteFile(fileId);
-        // Set message to show delete file success
-        messageToShow = "FileDelete";
+        int rowUpdate = fileService.deleteFile(fileId);
+        // Set message to show to user
+        if (rowUpdate > 0) {
+            // Set message to show delete file success
+            messageToShow = "FileDelete";
+        } else if (rowUpdate < 0) {
+            // Trying to delete other user's file
+            messageToShow = "WrongUserFile";
+        } else {
+            // File error
+            messageToShow = "FileError";
+        }
         return "redirect:/home";
     }
 
