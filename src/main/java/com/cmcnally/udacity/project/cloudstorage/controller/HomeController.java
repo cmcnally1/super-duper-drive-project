@@ -70,6 +70,10 @@ public class HomeController {
                 model.addAttribute("fileDeleteSuccess", true);
                 messageToShow = "";
                 break;
+            case "FileEmpty":
+                model.addAttribute("fileEmpty", true);
+                messageToShow = "";
+                break;
         }
 
         // Add data to display to the user in the view
@@ -123,11 +127,18 @@ public class HomeController {
     // POST method to handle a user uploading a file
     @PostMapping("/uploadFile")
     public String fileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        // Add new file via file service
-        fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
-        model.addAttribute("storedFiles", this.fileService.getStoredFiles());
-        // Set message to show upload file success
-        messageToShow = "FileAdd";
+        // Check if file uploaded is empty
+        if(file.isEmpty()){
+            // if file is empty, display an alert to user
+            messageToShow = "FileEmpty";
+        } else {
+            // if file is not empty, proceed to store file in database.
+            // Add new file via file service
+            fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
+            model.addAttribute("storedFiles", this.fileService.getStoredFiles());
+            // Set message to show upload file success
+            messageToShow = "FileAdd";
+        }
         return "redirect:/home";
     }
 
