@@ -255,6 +255,10 @@
             alert('The file you are uploading exceeds the maximum size of 30MB. Please try again with a smaller file.');
         </script>
 
+        <script th:if="${noteTooLarge}">
+            alert('Your note could not be stored as your description exceeds the maximum length of 1000 characters. Please try again with a shorter description.');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal

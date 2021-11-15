@@ -21,7 +21,14 @@ public class NoteService {
     }
 
     public int addNote(Note note) {
-        return noteMapper.insert(note);
+        // Check size of the note description.
+        // If it does not exceed max length, add note.
+        // else return error.
+        if (note.getNotedescription().length() <= 1000) {
+            return noteMapper.insert(note);
+        } else {
+            return -1;
+        }
     }
 
     public List<Note> getStoredNotes() {

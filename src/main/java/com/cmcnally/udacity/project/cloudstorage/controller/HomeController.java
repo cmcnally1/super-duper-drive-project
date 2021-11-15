@@ -102,6 +102,10 @@ public class HomeController {
                 model.addAttribute("fileTooLarge", true);
                 messageToShow = "";
                 break;
+            case "NoteLarge":
+                model.addAttribute("noteTooLarge", true);
+                messageToShow = "";
+                break;
         }
 
         // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
@@ -135,9 +139,13 @@ public class HomeController {
             if (rowsUpdate > 0){
                 // Set message to show add note success
                 messageToShow = "NoteAdd";
+            } else if(rowsUpdate == -1) {
+                // Set message to show if note too large
+                messageToShow = "NoteLarge";
             } else {
                 messageToShow = "NoteError";
             }
+
         } else {
             // Update existing note and return number of rows update in database
             rowsUpdate = noteService.editNote(noteForm.getFormNoteTitle(), noteForm.getFormNoteDescription(), noteForm.getFormNoteId());
