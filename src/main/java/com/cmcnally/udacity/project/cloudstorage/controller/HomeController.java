@@ -110,6 +110,10 @@ public class HomeController {
                 model.addAttribute("noteTitleTooLarge", true);
                 messageToShow = "";
                 break;
+            case "FileName":
+                model.addAttribute("fileNameSame", true);
+                messageToShow = "";
+                break;
         }
 
         // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
@@ -215,14 +219,15 @@ public class HomeController {
             messageToShow = "FileLarge";
         } else {
 
-            file.getSize();
-            // if file is not empty, proceed to store file in database.
             // Add new file via file service
             rowsUpdate = fileService.addFile(new File(null, file.getOriginalFilename(), file.getContentType(), String.valueOf(file.getSize()), authenticationService.getUserId(), file.getBytes()));
             // If rows have been update/created, then show updated notes to user
             if (rowsUpdate > 0){
                 // Set message to show upload file success
                 messageToShow = "FileAdd";
+            } else if (rowsUpdate == -1) {
+                // Set message to show same name error
+                messageToShow = "FileName";
             } else {
                 // Show file error message to user
                 messageToShow = "FileError";

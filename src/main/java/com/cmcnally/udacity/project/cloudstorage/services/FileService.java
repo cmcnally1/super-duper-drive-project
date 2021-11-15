@@ -24,6 +24,16 @@ public class FileService {
 
     // Method to add file to database via mapper
     public int addFile(File file){
+        // Get logged in user's files
+        List<File> userFiles = this.getStoredFiles();
+
+        // Search user files for files of the same name. If found, return error.
+        for (int i = 0; i < userFiles.size(); i++){
+            if (userFiles.get(i).getFilename().equals(file.getFilename())){
+                return -1;
+            }
+        }
+        // Add file to database
         return fileMapper.insert(file);
     }
 

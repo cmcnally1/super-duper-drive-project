@@ -263,6 +263,10 @@
             alert('Your note could not be stored as your title exceeds the maximum length of 20 characters. Please try again with a shorter title.');
         </script>
 
+        <script th:if="${fileNameSame}">
+            alert('The file you are trying to upload has the same name as another file currently stored. Please try again with another file name.');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal
