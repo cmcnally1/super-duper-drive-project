@@ -114,6 +114,10 @@ public class HomeController {
                 model.addAttribute("fileNameSame", true);
                 messageToShow = "";
                 break;
+            case "NoteAlreadyExists":
+                model.addAttribute("noteExists", true);
+                messageToShow = "";
+                break;
         }
 
         // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
@@ -153,6 +157,9 @@ public class HomeController {
             } else if(rowsUpdate == -2) {
                 // Set message to show if note title too large
                 messageToShow = "NoteTitleLarge";
+            } else if(rowsUpdate == -3) {
+                // Set message to show note already exists
+                messageToShow = "NoteAlreadyExists";
             } else {
                 messageToShow = "NoteError";
             }
@@ -170,6 +177,9 @@ public class HomeController {
             } else if(rowsUpdate == -2) {
                 // Set message to show if note title too large
                 messageToShow = "NoteTitleLarge";
+            } else if(rowsUpdate == -3) {
+                // Set message to show note already exists
+                messageToShow = "NoteAlreadyExists";
             } else {
                 messageToShow = "NoteError";
             }

@@ -28,10 +28,10 @@ public class DeleteNoteTest {
 
     // Initialise common test variables
     private String testFirstName = "John";
-    private String testLastName = "Doe";
-    private String testUsername = "johnD";
-    private String testPassword = "JohnsPassw0rd";
-    private String testNoteTitle = "Test Note!";
+    private String testLastName = "Doey";
+    private String testUsername = "johnDy";
+    private String testPassword = "JohnysPassw0rd";
+    private String testNoteTitle = "Test Note New!";
     private String testNoteDesc = "This is a test note.";
 
     @BeforeAll

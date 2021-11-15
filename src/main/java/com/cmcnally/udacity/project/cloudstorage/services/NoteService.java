@@ -21,10 +21,21 @@ public class NoteService {
     }
 
     public int addNote(Note note) {
+        // Get current user's stores notes
+        List<Note> userNotes = this.getStoredNotes();
+
         // Check size of the note description and title.
         // If it does not exceed max length, add note.
         // else return error.
         if (note.getNotedescription().length() <= 1000 && note.getNotetitle().length() <= 20) {
+            // Search user notes to ensure title and description isn't already taken
+            for (int i = 0; i < userNotes.size(); i++){
+                if (userNotes.get(i).getNotetitle().equals(note.getNotetitle()) && userNotes.get(i).getNotedescription().equals(note.getNotedescription())){
+                    // Return error if title and description already exists
+                    return -3;
+                }
+            }
+            // Update note if everything ok
             return noteMapper.insert(note);
         } else if (note.getNotetitle().length() > 20){
             // return title error
@@ -58,10 +69,20 @@ public class NoteService {
 
     // Method to update a note using the user inputted edits and the note id
     public int editNote(String notetitle, String notedescription, Integer noteid) {
+        // Get list of current user's notes
+        List<Note> userNotes = this.getStoredNotes();
         // Check size of the note description and title.
         // If it does not exceed max length, add note.
         // else return error.
         if (notedescription.length() <= 1000 && notetitle.length() <= 20) {
+            // Search user notes to ensure title and description isn't already taken
+            for (int i = 0; i < userNotes.size(); i++){
+                if (userNotes.get(i).getNotetitle().equals(notetitle) && userNotes.get(i).getNotedescription().equals(notedescription)){
+                    // Return error if title and description already exists
+                    return -3;
+                }
+            }
+            // Update note if everything ok
             return noteMapper.update(notetitle, notedescription, noteid);
         } else if (notetitle.length() > 20){
             // return title error
