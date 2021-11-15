@@ -259,6 +259,10 @@
             alert('Your note could not be stored as your description exceeds the maximum length of 1000 characters. Please try again with a shorter description.');
         </script>
 
+        <script th:if="${noteTitleTooLarge}">
+            alert('Your note could not be stored as your title exceeds the maximum length of 20 characters. Please try again with a shorter title.');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal

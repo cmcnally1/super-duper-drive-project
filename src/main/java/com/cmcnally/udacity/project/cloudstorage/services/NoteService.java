@@ -21,12 +21,16 @@ public class NoteService {
     }
 
     public int addNote(Note note) {
-        // Check size of the note description.
+        // Check size of the note description and title.
         // If it does not exceed max length, add note.
         // else return error.
-        if (note.getNotedescription().length() <= 1000) {
+        if (note.getNotedescription().length() <= 1000 && note.getNotetitle().length() <= 20) {
             return noteMapper.insert(note);
+        } else if (note.getNotetitle().length() > 20){
+            // return title error
+            return -2;
         } else {
+            // return description error
             return -1;
         }
     }
@@ -54,7 +58,19 @@ public class NoteService {
 
     // Method to update a note using the user inputted edits and the note id
     public int editNote(String notetitle, String notedescription, Integer noteid) {
-        return noteMapper.update(notetitle, notedescription, noteid);
+        // Check size of the note description and title.
+        // If it does not exceed max length, add note.
+        // else return error.
+        if (notedescription.length() <= 1000 && notetitle.length() <= 20) {
+            return noteMapper.update(notetitle, notedescription, noteid);
+        } else if (notetitle.length() > 20){
+            // return title error
+            return -2;
+        } else {
+            // return description error
+            return -1;
+        }
+
     }
 
 }

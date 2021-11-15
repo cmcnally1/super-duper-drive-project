@@ -106,6 +106,10 @@ public class HomeController {
                 model.addAttribute("noteTooLarge", true);
                 messageToShow = "";
                 break;
+            case "NoteTitleLarge":
+                model.addAttribute("noteTitleTooLarge", true);
+                messageToShow = "";
+                break;
         }
 
         // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
@@ -140,8 +144,11 @@ public class HomeController {
                 // Set message to show add note success
                 messageToShow = "NoteAdd";
             } else if(rowsUpdate == -1) {
-                // Set message to show if note too large
+                // Set message to show if note description too large
                 messageToShow = "NoteLarge";
+            } else if(rowsUpdate == -2) {
+                // Set message to show if note title too large
+                messageToShow = "NoteTitleLarge";
             } else {
                 messageToShow = "NoteError";
             }
@@ -153,6 +160,12 @@ public class HomeController {
             if (rowsUpdate > 0){
                 // Set message to show update note success
                 messageToShow = "NoteUpdate";
+            } else if(rowsUpdate == -1) {
+                // Set message to show if note description too large
+                messageToShow = "NoteLarge";
+            } else if(rowsUpdate == -2) {
+                // Set message to show if note title too large
+                messageToShow = "NoteTitleLarge";
             } else {
                 messageToShow = "NoteError";
             }
