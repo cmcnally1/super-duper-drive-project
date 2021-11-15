@@ -53,13 +53,14 @@ public class SignupController {
             }
         }
 
-        // Check if an error has occurred. If not, set success.
+        // Check if an error has occurred. If not, set success and redirect to login.
         if (signupError == null) {
             model.addAttribute("signupSuccess", true);
+            return "redirect:/login";
         } else {
             model.addAttribute("signupError", signupError);
+            return "signup";
         }
 
-        return "signup";
     }
 }
