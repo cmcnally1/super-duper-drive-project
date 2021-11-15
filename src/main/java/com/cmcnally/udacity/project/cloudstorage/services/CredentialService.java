@@ -26,6 +26,15 @@ public class CredentialService {
     // Method to add a new credential to the database
     public int addCredential(Credential credential) {
 
+        // Get list of user credentials
+        List<Credential> userCreds = this.getStoredCredentials();
+
+        // Search user credentials to see if username already taken. Return error if taken
+        for (int i = 0; i < userCreds.size(); i++){
+            if (userCreds.get(i).getUsername().equals(credential.getUsername())){
+                return -1;
+            }
+        }
         /*
             Encrypt the user's inputted credential password before storing
          */
@@ -80,6 +89,16 @@ public class CredentialService {
 
     // Method to update a credential with new values inputted buy the user
     public int editCredential(String url, String username, String password, Integer credentialid) {
+        // Get list of user credentials
+        List<Credential> userCreds = this.getStoredCredentials();
+
+        // Search user credentials to see if username already taken. Return error if taken
+        for (int i = 0; i < userCreds.size(); i++){
+            if (userCreds.get(i).getUsername().equals(username)){
+                return -1;
+            }
+        }
+
         /*
             Encrypt the user's inputted credential password before storing
          */

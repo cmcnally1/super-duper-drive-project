@@ -271,6 +271,10 @@
             alert('Your note could not be stored as this note already exists. Please try again.');
         </script>
 
+        <script th:if="${credExists}">
+            alert('Your credential could not be stored as another credential has the same username. Please try again.');
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
             // For opening the note modal

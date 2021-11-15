@@ -118,6 +118,10 @@ public class HomeController {
                 model.addAttribute("noteExists", true);
                 messageToShow = "";
                 break;
+            case "CredAlreadyExists":
+                model.addAttribute("credExists", true);
+                messageToShow = "";
+                break;
         }
 
         // Try retrieve data for user. Catch if there is no authorised user (null) and return login page
@@ -309,6 +313,9 @@ public class HomeController {
             if (rowsUpdate > 0){
                 // Set message to show add credential success
                 messageToShow = "CredAdd";
+            } else if(rowsUpdate == -1) {
+                // Set message to show credential already exists
+                messageToShow = "CredAlreadyExists";
             } else {
                 messageToShow = "CredError";
             }
@@ -319,6 +326,9 @@ public class HomeController {
             if (rowsUpdate > 0){
                 // Set message to show update credential success
                 messageToShow = "CredUpdate";
+            } else if(rowsUpdate == -1) {
+                // Set message to show credential already exists
+                messageToShow = "CredAlreadyExists";
             } else {
                 messageToShow = "CredError";
             }
