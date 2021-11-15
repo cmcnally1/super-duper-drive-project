@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -55,8 +56,8 @@ public class SignupTest {
         // Click the submit button
         signupPage.clickSubmit();
 
-        // Verify that the user is successfully created by checking the success message is displayed
-        assertTrue(driver.findElement(By.id("success-msg")).isDisplayed());
+        /// Verify that the home page is loaded indicating a successful login
+        assertEquals("Login", driver.getTitle());
     }
 
 }
